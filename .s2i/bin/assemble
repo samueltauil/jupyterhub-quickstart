@@ -42,9 +42,23 @@ rm -rf /tmp/src
 
 ## Install Conda
 
-wget https://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
-bash ~/miniconda.sh -p $HOME/miniconda
-export PATH="$HOME/miniconda/bin:$PATH"
+export CONDA_DIR=/opt/conda
+export PATH=$CONDA_DIR/bin:$PATH
+export MINICONDA_VERSION=4.5.11
+cd /tmp 
+wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
+echo "e1045ee415162f944b6aebfe560b8fee *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - 
+/bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR 
+rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
+echo "export PATH=$CONDA_DIR/bin:$PATH" >> ~/.bashrc
+
+$CONDA_DIR/bin/conda config --system --prepend channels conda-forge
+$CONDA_DIR/bin/conda config --system --set auto_update_conda false
+$CONDA_DIR/bin/conda config --system --set show_channel_urls true 
+$CONDA_DIR/bin/conda install --quiet --yes conda="${MINICONDA_VERSION%.*}.*" 
+$CONDA_DIR/bin/conda update --all --quiet --yes 
+conda clean -tipsy
+fix-permissions $CONDA_DIR 
 
 # Scripts used to be kept in /opt/app-root/scripts but are now in the
 # directory /opt/app-root/bin. Create a symlink for wait-for-database
