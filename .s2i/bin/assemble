@@ -41,7 +41,7 @@ mv /tmp/src/start-jupyterhub.sh /opt/app-root/bin/
 rm -rf /tmp/src
 
 ## Install Conda
-export CONDA_DIR=/opt/conda
+export CONDA_DIR=$HOME/conda
 export PATH=$CONDA_DIR/bin:$PATH
 export MINICONDA_VERSION=4.5.11
 cd /tmp 
