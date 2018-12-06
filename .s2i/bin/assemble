@@ -40,6 +40,12 @@ mv /tmp/src/start-jupyterhub.sh /opt/app-root/bin/
 
 rm -rf /tmp/src
 
+## Install Conda
+
+wget https://repo.continuum.io/miniconda/Miniconda3-3.7.0-Linux-x86_64.sh -O ~/miniconda.sh
+bash ~/miniconda.sh -b -p $HOME/miniconda
+export PATH="$HOME/miniconda/bin:$PATH"
+
 # Scripts used to be kept in /opt/app-root/scripts but are now in the
 # directory /opt/app-root/bin. Create a symlink for wait-for-database
 # for now until any templates running script from old location are
